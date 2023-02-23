@@ -21,10 +21,13 @@ function App() {
         handleNumber(value);
         break;
       case ".":
-        dot(value);
+        separator(value);
         break;
       case "AC":
         clear();
+        break;
+      case "C":
+        clearLast();
         break;
       case "=":
         evaluate();
@@ -36,73 +39,92 @@ function App() {
 
   function handleOperation(operator) {
     let outputCopy = output;
-  
+
     if (calculated) {
       outputCopy = input;
       setCalculated(false);
     }
 
-    setInput(operator)
-    setOutput(outputCopy + operator)
+    const isPreviousOperator = output[output.length - 1] === operator;
+
+    if (isPreviousOperator) {
+      return;
+    }
+
+    const last = outputCopy[outputCopy.length - 1];
+    if (operator !== "-" && (last === "*" || last === "/" || last === "+")) {
+      outputCopy = outputCopy.slice(0, -1);
+    } else if (last === "-" && operator !== "-") {
+      outputCopy = outputCopy.replace(/[\+\-\*\/]/g, "");
+    }
+
+    setInput(operator);
+    setOutput(outputCopy + operator);
   }
 
   function handleNumber(digit) {
     let inputCopy = input;
     let outputCopy = output;
 
-    if (inputCopy === '0' && digit === '0') {
-      inputCopy = '';
-      outputCopy = '';
+    if ((inputCopy === "0" && (digit === "0" || digit !== "0")) || calculated) {
+      inputCopy = "";
+      outputCopy = "";
     }
 
-    if (inputCopy === '0' && digit !== '0') {
-      inputCopy = '';
-    }
-    
-    if(operators.includes(input)) {
-      inputCopy = '';
+    if (operators.includes(input)) {
+      inputCopy = "";
     }
 
-    if (calculated) {
-      outputCopy = '';
-      inputCopy = '';
-      setCalculated(false)
-    } 
+    if (input.length === 9) {
+      return;
+    }
 
-
-    setInput(inputCopy + digit)
-    setOutput(outputCopy + digit)
+    setInput(inputCopy + digit);
+    setOutput(outputCopy + digit);
   }
 
-  function dot(dot) {
+  function separator(separator) {
     let inputCopy = input;
     let outputCopy = output;
 
-    if(inputCopy === '0') {
+    if (inputCopy === "0") {
       outputCopy = input;
     }
 
-    if(inputCopy.includes(dot)) {
-      return; 
+    if (inputCopy.includes(separator)) {
+      return;
     }
 
-    setInput(inputCopy + dot)
-    setOutput(outputCopy + dot)
+    setInput(inputCopy + separator);
+    setOutput(outputCopy + separator);
+  }
+
+  function clearLast() {
+    let inputCopy = input;
+    let outputCopy = output;
+
+    if (inputCopy.length !== 0) {
+      outputCopy = output.slice(0, -1);
+      inputCopy = input.slice(0, -1);
+    } else {
+      return;
+    }
+
+    setInput(inputCopy);
+    setOutput(outputCopy);
   }
 
   function clear() {
     setOutput("");
     setInput("0");
-    setCalculated(false)
+    setCalculated(false);
   }
 
   function evaluate() {
-    let outputCopy = output;
-
-    const result = eval(outputCopy).toString();
-    setInput(result)
-    setOutput(result)
-    setCalculated(true)
+    const result = eval(output).toString();
+    setInput(result);
+    setOutput(result);
+    setCalculated(true);
   }
 
   return (

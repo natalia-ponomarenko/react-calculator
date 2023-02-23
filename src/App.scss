@@ -18,16 +18,15 @@
 
   &__display {
     padding: 0 25px;
-    height: 180px;
     color: #fff;
     font-size: 45px;
     word-wrap: break-word;
   }
 
   &__display-wrapper {
-    height: 200px;
+    height: auto;
+    min-height: 200px;
     overflow: hidden;
-    position: relative;
   }
 
   &__buttons {
@@ -65,7 +64,7 @@
 
 #clear {
   grid-column-start: 1;
-  grid-column-end:4;
+  grid-column-end:3;
   width: 90%;
   border-radius: 30px;
   background-color: rgb(159, 155, 155);
@@ -98,12 +97,11 @@
 }
 
 #output {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 500;
   color: orange;
 }
 
 #display {
-  position: absolute;
-  bottom: 30px;
+  word-break: break-word;
 }

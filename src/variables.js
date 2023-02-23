@@ -1,5 +1,6 @@
 export const data = [
   { value: "AC", id: "clear" },
+  { value: "C", id: "clear_last" },
   { value: "/", id: "divide" },
   { value: "7", id: "seven" },
   { value: "8", id: "eight" },
