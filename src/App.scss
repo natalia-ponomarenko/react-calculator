@@ -1,9 +1,19 @@
-.wrapper {
+@mixin flex-centered {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wrapper {
+  @include flex-centered;
   height: 100vh;
 }
+
+$text-color: #fff;
+$dark-middle-color: rgb(47, 46, 46);
+$dark-lighter-color: rgb(43, 38, 38);
+$accent-color: orange;
+$accent-light-color: rgb(255, 178, 35);
 
 .calculator {
   width: 400px;
@@ -18,7 +28,7 @@
 
   &__display {
     padding: 0 25px;
-    color: #fff;
+    color: $text-color;
     font-size: 45px;
     word-wrap: break-word;
   }
@@ -32,7 +42,7 @@
   &__buttons {
     width: 370px;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     margin: 0 auto;
     justify-items: center;
   }
@@ -41,10 +51,10 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    color: white;
+    color: $text-color;
     font-size: 35px;
     font-weight: 500;
-    background-color: rgb(47, 46, 46);
+    background-color: $dark-middle-color;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,7 +63,7 @@
     user-select: none;
 
     &:active {
-      background-color: rgb(43, 38, 38);
+      background-color: $dark-lighter-color;
     }
   }
 }
@@ -64,7 +74,7 @@
 
 #clear {
   grid-column-start: 1;
-  grid-column-end:3;
+  grid-column-end: 3;
   width: 90%;
   border-radius: 30px;
   background-color: rgb(159, 155, 155);
@@ -85,10 +95,10 @@
 #add,
 #multiply,
 #subtract {
-  background-color: orange;
+  background-color: $accent-color;
 
   &:active {
-    background-color:rgb(255, 178, 35);
+    background-color: $accent-light-color;
   }
 }
 
@@ -99,9 +109,34 @@
 #output {
   font-size: 30px;
   font-weight: 500;
-  color: orange;
+  color: $accent-color;
 }
 
 #display {
   word-break: break-word;
+}
+
+@media screen and (max-width: 600px) {
+  .calculator {
+    width: 300px;
+    height: 480px;
+
+    &__buttons {
+      width: 270px;
+    }
+
+    &__button {
+      width: 50px;
+      height: 50px;
+      font-size: 25px;
+    }
+
+    &__display-wrapper {
+      min-height: 100px;
+    }
+
+    &__display {
+      font-size: 40px;
+    }
+  }
 }
